@@ -13,9 +13,9 @@
     Intuition Academy
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  
+
   <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
-  
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="{% static 'intuition/assets/css/font-awesome.min.css' %}" rel="stylesheet">
@@ -37,12 +37,13 @@
   <script src="https://smtpjs.com/v3/smtp.js"></script>
   <script type="text/javascript">
     var otp = Math.floor(100000 + Math.random() * 900000);
+    console.log(otp);
     function sendEmail() {
       var mail = document.getElementById("mail").value;
       Email.send({
         Host: "smtp.gmail.com",
         Username : "intuition.academy.itl@gmail.com",
-        Password : "9990984661@tk",
+        Password : "zdqnltabtlilkujr",
         To : mail,
         From : "intuition.academy.itl@gmail.com",
         Subject : "OTP Verification",

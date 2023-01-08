@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certficate</title>
+    <link rel="stylesheet" media="all" href="{% static 'intuition/style.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="{% static 'intuition/script.js' %}"></script>
+</head>
+<body oncontextmenu="return false;">
+    <div class="user-info">
+        <input type="text" name="name" placeholder="enter name here" id="name">
+        <select name="course_list" id="course">
+            <option value="1">Basic Computer & Touch Typing Course</option>
+            <option value="2">Python and other programming language</option>
+            <option value="3">Full Stack Web Development with Python and Django</option>
+            <option value="4">English from 6th - 10th</option>
+            <option value="5">English from 11th - 12th</option>
+            <option value="6">Tally ERP 9/Prime</option>
+            <option value="7">Advanced Excel</option>
+            <option value="8">Tally ERP-9/Prime with Advanced Excel</option>
+        </select>
+    </div>
+    <div class="certificate">
+        <div class="top-left black"></div>
+        <div class="bottom-right black"></div>
+        <div class="left-middle green"></div>
+        <div class="right-middle green"></div>
+        <div class="bottom-left white-grey"></div>
+        <div class="top-right white-grey"></div>
+        <div class="svg-tag">
+            <img class="stamp-img" src="{% static 'intuition/image.svg' %}" alt="">
+            <img class="stamp" src="{% static 'intuition/stamp.jpg' %}" alt="">
+        </div>
+        <img class="stamp-wm" src="{% static 'intuition/stamp.jpg' %}" alt="">
+        <div class="data">
+            <p class="cert-title">certificate</p>
+            <p class="cert-title-sub-line">of Completion</p>
+            <p class="cert-award-line">This Certificate is awarded to : </p>
+            <p class="student-name">Name Here</p>
+            <p class="course-name">
+                for successfully completed the
+                <span id="course-name">Advance Tally ERP 9(GST) with Advance Excel</span>
+                course on 25th July, 2022</p>
+            <div class="sign">
+                <div class="pradeep-sign">
+                    <img class="sign-img" src="{% static 'intuition/pradeep-sign.png' %}" alt="">
+                    <hr>
+                    <p class="sign-name">pradeep kumar</p>
+                </div>
+                <div class="tushar-sign">
+                    <img class="sign-img" src="{% static 'intuition/tushar-sign.png' %}" alt="">
+                    <hr>
+                    <p class="sign-name">tushar kumar</p>
+                </div>
+            </div>
+        </div>
+        <p class="cert-id">ID : <span id="id-name">Name</span>_IA@786</p>
+    </div>
+    <button id="print">print</button>
+    <script type="text/javascript">
+        window.oncontextmenu = function () {
+            return false;
+        }
+        $(document).keydown(function (event) {
+            if (event.keyCode == 123) {
+                return false;
+            }
+            else if ((event.ctrlKey && event.shiftKey && event.keyCode == 73) || (event.ctrlKey && event.shiftKey && event.keyCode == 74)) {
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

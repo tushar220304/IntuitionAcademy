@@ -1,0 +1,214 @@
+@page {
+    size: A4 landscape;
+}
+
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* @media print {
+    Your notes
+} */
+
+.certificate {
+    height: 650px;
+    width: 950px;
+    border: 1px solid black;
+    overflow: hidden;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    isolation: isolate;
+}
+
+.black {
+    background-color: #565a60;
+}
+
+.top-left {
+    height: 200px;
+    width: 400px;
+    left: -98px;
+    top: -90px;
+    position: absolute;
+    transform: rotate(325deg);
+}
+
+.bottom-right {
+    height: 200px;
+    width: 400px;
+    right: -102px;
+    bottom: -60px;
+    position: absolute;
+    transform: rotate(323deg);
+}
+
+.white-grey {
+    background-color: #f2f2f2;
+}
+
+.bottom-left {
+    height: 300px;
+    width: 300px;
+    bottom: -185px;
+    left: -87px;
+    position: absolute;
+    transform: rotate(45deg);
+}
+
+.top-right {
+    top: -270px;
+    right: 116px;
+    height: 300px;
+    width: 237px;
+    position: absolute;
+    transform: rotate(45deg);
+}
+
+.green {
+    background-color: #09c49d;
+}
+
+.left-middle {
+    height: 300px;
+    width: 200px;
+    position: absolute;
+    top: 120px;
+    left: -129px;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+.right-middle {
+    height: 300px;
+    width: 200px;
+    position: absolute;
+    top: 123px;
+    right: -134px;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+.svg-tag {
+    position: absolute;
+    height: 50px;
+    width: 100px;
+    right: 56px;
+    top: 20px;
+}
+
+.svg .stamp-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.stamp {
+    position: absolute;
+    top: 10px;
+    left: 9px;
+    height: 78px;
+}
+
+.stamp-wm {
+    position: absolute;
+    top: 63%;
+    left: 50%;
+    width: 400px;
+    height: 350px;
+    margin-top: -182.5px;
+    margin-left: -200px;
+    opacity: 0.3;
+}
+
+.data {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* justify-items: center; */
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.cert-title {
+    font-size: 72px;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    color: #09c49d;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+}
+
+.cert-title-sub-line {
+    font-weight: 400;
+    font-size: 41px;
+    margin-top: 0px;
+}
+
+.cert-award-line {
+    font-weight: 700;
+    font-size: 23px;
+    margin-top: 5px;
+}
+
+.student-name {
+    font-weight: 400;
+    font-size: 100px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.course-name {
+    font-weight: 700;
+    font-size: 20px;
+    width: 53%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.cert-id {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    font-weight: bold;
+    color: #6f6262;
+    font-family: "Poppins";
+}
+
+.sign {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 47%;
+    margin-top: 0px;
+}
+
+.sign-img {
+    height: 80px;
+    width: 170px;
+}
+
+.sign-name {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-family: "Poppins";
+    text-align: center;
+}
+
+hr {
+    margin-top: -20px;
+    margin-bottom: 10px;
+}

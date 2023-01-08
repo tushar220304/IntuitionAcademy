@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.core.exceptions import *
 from django.http import HttpResponse
 from django.core.mail import send_mail
@@ -12,10 +13,10 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-def passGen(full_name): # Generates password for students
-	name = full_name.split(' ')
-	password = name[0][:3] + name[1][:3] + '@IA'
-	return password
+# def passGen(full_name): # Generates password for students
+# 	name = full_name.split(' ')
+# 	password = name[0][:3] + name[1][:3] + '@IA'
+# 	return password
 
 def home(request):
 	if(request.method == 'POST') :
@@ -51,24 +52,34 @@ def st_detail(request):
 		email = request.session['mail']
 		detail = Students.objects.get(Email=email)
 	except ObjectDoesNotExist:
-		return HttpResponse(f"No data found related to this {email} mail id, please check your email and retry it.")  
+		return HttpResponse(f"No data found related to this {email} mail id, please check your email and retry it.")
 	return render(request, 'intuition/student_detail.html', {'detail':detail})
 
 def edit_st_detail(request, id): # for teachers
 	detail = Students.objects.get(id=id)
-	if (request.method == 'POST'):
-		detail.Fees_Paid += int(request.POST['feesPaid'])
-		detail.Fees_left = detail.Total_Fees - detail.Fees_Paid
-		detail.Fees_Counter += 1
-		detail.DD = detail.DOJ + relativedelta(months=detail.Fees_Counter)
-		if (detail.Fees_left == 0 and detail.Fees_Paid == detail.Total_Fees) :
-			detail.Status = 'completed'
-			detail.DD = detail.DOJ
+	if 'update' in request.POST:
+	    feePaid = int(request.POST['feesPaid'])
+	    detail.Fees_Paid += int(request.POST['feesPaid'])
+	    detail.Fees_left = detail.Total_Fees - detail.Fees_Paid
+	    detail.Fees_Counter += 1
+	    detail.DD = detail.DOJ + relativedelta(months=detail.Fees_Counter)
+	    if (detail.Fees_left == 0 and detail.Fees_Paid == detail.Total_Fees) :
+	        detail.Status = 'completed'
+	        detail.DD = detail.DOJ
+	    detail.save()
+	    stLog = Log(Name_id=detail.id,PaidAmt=feePaid)
+	    stLog.save()
+	    msg_plain = render_to_string('intuition/st_detail_email.txt')
+	    msg_html = render_to_string('intuition/st_update_detail_email.html', {'detail': detail})
+	    send_mail(
+				f'Fee Updation',msg_plain,settings.EMAIL_HOST_USER,[detail.Email],html_message=msg_html,)
+	    return redirect('st_list')
+	elif 'leave' in request.POST:
+		detail.Status = 'leave'
 		detail.save()
-		CourseName = detail.Course.Name
 		send_mail(
-			f'Fees Updation',
-			f'Welcome in Intuition Academy - Intention to learn \n Your Details are given below :- \n Name - {detail.Full_Name} \n Email - {detail.Email} \n Date of Joining - {detail.DOJ} \n Enrolled Course - {CourseName} \n Duration - {detail.Duration} months \n Fees left = Total Fees - Fees Paid \n Fees left = {detail.Total_Fees} - {detail.Fees_Paid} = {detail.Fees_left}',
+			f'Sorry to see you goo',
+			f'Intuition Academy - Intention to learn \n We regret to see you go so please give us your valuable feed back by replying to this mail.',
 			settings.EMAIL_HOST_USER,
 			[detail.Email]
 			)
@@ -81,7 +92,7 @@ def add_student(request): # for teachers
 	if (request.method == 'POST'):
 		Full_Name = request.POST['full_name']
 		Email = request.POST['email']
-		password = passGen(Full_Name) 
+# 		password = passGen(Full_Name)
 		Course = request.POST['course_list']
 		DOJ = datetime.date.today()
 		Duration = request.POST['duration']
@@ -90,17 +101,27 @@ def add_student(request): # for teachers
 		dol = DOJ + relativedelta(months=int(Duration))
 		dd = DOJ + relativedelta(months=1)
 		CourseName = Course_Name.objects.values_list('Name', flat=True).get(id=Course)
-		student = Students(Full_Name=Full_Name,Email=Email,password=password,Course_id=Course,DOL=dol,DD=dd,Duration=Duration,Total_Fees=TotalFees,Fees_left=Feesleft)
+		student = Students(Full_Name=Full_Name,Email=Email,Course_id=Course,DOL=dol,DD=dd,Duration=Duration,Total_Fees=TotalFees,Fees_left=Feesleft)
 		student.save()
+		detail = Students.objects.get(Email=Email)
+		msg_plain = render_to_string('intuition/st_detail_email.txt')
+		msg_html = render_to_string('intuition/st_detail_email.html', {'detail': detail})
 		send_mail(
 			f'Hi {Full_Name}',
 			f'Welcome in Intuition Academy - Intention to learn \n Your Details are given below :- \n Name - {Full_Name} \n Email - {Email} \n Date of Joining - {DOJ} \n Enrolled Course - {CourseName} \n Duration - {Duration} months \n Total Fees - {TotalFees}',
 			settings.EMAIL_HOST_USER,
 			[Email]
 			)
+    #     send_mail(
+				# f'Fee Updation',
+				# msg_plain,
+				# settings.EMAIL_HOST_USER,
+				# [detail.Email],
+				# html_message=msg_html,
+				# )
 		return redirect('home')
 	else :
-		return render(request, 'intuition/add-new-student.html', {'course_list':course})	
+		return render(request, 'intuition/add-new-student.html', {'course_list':course})
 
 def st_list(request): # for teachers
 	if (request.method == 'POST'):
@@ -142,11 +163,11 @@ def filtered_by_email(request): # for teachers
 		else :
 			return render(request, 'intuition/edit-st-detail.html', {'detail':detail})
 	except ObjectDoesNotExist:
-		return HttpResponse(f"No record found related to this {eid} mail id.")  
-	
+		return HttpResponse(f"No record found related to this {eid} mail id.")
+
 def filtered_by_dd(request): # for teachers
 	now = timezone.now()
-	detail_st = Students.objects.filter(DD__gte=now).order_by('DD')
+	detail_st = Students.objects.filter(Status='pursuing').filter(DD__gte=now).order_by('DD')
 	paginator = Paginator(detail_st, 8)
 	page = request.GET.get('page')
 	try:
@@ -168,3 +189,26 @@ def filtered_by_completed(request): # for teachers
 	except EmptyPage:
 		detail = paginator.page(paginator.num_pages)
 	return render(request, 'intuition/student-names.html', {'detail':detail})
+
+
+def logs(request, id):
+	name = Students.objects.get(id=id)
+	log = Log.objects.filter(Name=id).order_by('-DateOfPayment')
+	return render(request, 'intuition/st-log.html', {'log':log, 'name':name})
+
+
+def certificate(request):
+	return render(request, 'intuition/certificate.html')
+
+def certid_filter(request):
+    st_certid = request.GET.get('certid', None)
+    try :
+        student = Students.objects.get(certid=st_certid, Status = 'completed')
+    except:
+        student = None
+    if st_certid is None:
+        return render(request, 'intuition/verify_cert.html')
+    if student:
+        return render(request, 'intuition/student_detail.html', {'detail':student})
+    else:
+	    return HttpResponse(f'Sorry! This Certificate ID <b>{st_certid}</b> is not valid or not approved by government.')

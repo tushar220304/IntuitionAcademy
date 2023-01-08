@@ -13,9 +13,9 @@
     Intuition Academy
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  
+
   <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
-  
+
   <!--     Fonts and icons     -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" /> -->
   <link href="{% static 'intuition/assets/css/font-awesome.min.css' %}" rel="stylesheet">
@@ -66,7 +66,7 @@
   <!-- Navbar -->
   {% include "intuition/base-navbar.html" %}
 
-  <div class="myTable"> 
+  <div class="myTable">
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Filter By :
@@ -84,6 +84,7 @@
                 <th>Name</th>
                 <th>Course</th>
                 <th>Joining Date</th>
+                <th>Due Date</th>
                 <th>Fees Paid</th>
                 <th class="text">Actions</th>
             </tr>
@@ -94,15 +95,22 @@
                 <td>{{ st_detail.Full_Name }}</td>
                 <td>{{ st_detail.Course.Name }}</td>
                 <td>{{ st_detail.DOJ }}</td>
+                <td>{{ st_detail.DD }}</td>
                 <td>{{ st_detail.Fees_Paid }}</td>
                 <td class="td-actions text">
                   {% if request.user.is_superuser %}
                     <button type="button" rel="tooltip" class="btn btn-danger" onclick="javascript:location.href='{% url 'edit_st_detail' st_detail.id %}'">
                         Edit Details
                     </button>
+                    <button type="button" rel="tooltip" class="btn btn-danger" onclick="javascript:location.href='{% url 'logs' st_detail.id %}'">
+                        Log
+                    </button>
                     {% else %}
                     <button type="button" rel="tooltip" class="btn btn-danger" onclick="javascript:alert('You are not logged in.');">
                         Edit Details
+                    </button>
+                    <button type="button" rel="tooltip" class="btn btn-danger" onclick="javascript:alert('You are not logged in.');">
+                        Log
                     </button>
                     {% endif %}
                 </td>
@@ -203,7 +211,7 @@
   <noscript>
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=111649226022273&amp;ev=PageView&amp;noscript=1" />
   </noscript>
-  
+
 </body>
 
 

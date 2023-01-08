@@ -27,9 +27,12 @@ urlpatterns = [
     path('detail/', views.st_detail, name='st_detail'),
     path('student-List/', views.st_list, name='st_list'),
     path('edit-St-Detail/<id>/', views.edit_st_detail, name='edit_st_detail'),
+    path('log/<id>/', views.logs, name='logs'),
     path('add-student/', views.add_student, name='add_student'),
     path('filtered_by_dd/',views.filtered_by_dd, name='filtered_by_dd'),
     path('filtered_by_completed/',views.filtered_by_completed, name='filtered_by_completed'),
     path('filtered_by_email/',views.filtered_by_email, name='filtered_by_email'),
+    path('getcertificate/', views.certificate, name='certificate'),
+    path('verify-certificate/', views.certid_filter, name='certificate_id_filter'),
     path('admin/', admin.site.urls),
 ]

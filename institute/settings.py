@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-u8k6n_xnn-(-jkt@watcpjce^5^e(utdz$1uf3p0*4$4eux9ts'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -122,6 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/home/IntuitionAcademy/IntuitionAcademy/static'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -131,6 +133,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'intuition.academy.itl@gmail.com'
-EMAIL_HOST_PASSWORD = '9990984661@tk'
+EMAIL_HOST_PASSWORD = 'zdqnltabtlilkujr'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL='IntuitionAcademy <no-reply@study4life.pythonanywhere.com>'
+DEFAULT_FROM_EMAIL='Intuition Academy <no-reply@intuitionacademy.pythonanywhere.com>'

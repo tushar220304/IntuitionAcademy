@@ -15,7 +15,7 @@
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 
- 
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="{% static 'intuition/assets/css/font-awesome.min.css' %}" rel="stylesheet">
@@ -60,8 +60,10 @@
           {% if request.user.is_superuser %}
           <button type="button" class="btn btn-outline-neutral btn-round" data-toggle="modal" data-target="#exampleModal">Teacher</button>
           {% else %}
-          <button type="button" onclick="javascript:alert('You are not logged in.');" class="btn btn-outline-neutral btn-round">Teacher</button>
+          <button type="button" onclick="javascript:alert('You are not logged in.');window.location = 'https://intuitionacademy.pythonanywhere.com/admin/login/?next=/admin/';" class="btn btn-outline-neutral btn-round">Teacher</button>
           {% endif %}
+          <br>
+          <button style="margin-top: 5px;" onclick="javascript:location.href='{% url 'certificate_id_filter' %}'" type="button" class="btn btn-outline-neutral btn-round">Verify  Certificate</button >
         </div>
       </div>
     </div>
@@ -158,7 +160,7 @@
   <noscript>
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=111649226022273&amp;ev=PageView&amp;noscript=1" />
   </noscript>
-  
+
 </body>
 
 
